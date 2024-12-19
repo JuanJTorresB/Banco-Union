@@ -4,10 +4,16 @@ import Repository.Implementations.CuentaImpl;
 import model.Cheque;
 import model.Cliente;
 import model.Cuenta;
+import util.Enums.ChequesEstadoEnum;
+import util.Enums.ChequesPrioridadEnum;
+import util.Enums.TipoDeCuentaEnum;
 import util.FileManagment;
 import util.IdentificationValidator;
 
 import javax.swing.*;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -55,7 +61,8 @@ public class Main {
                     while (emitirChequesMenu){
                         System.out.println("Id Cuenta");
                         String enteredIdCuenta = scanner.nextLine();
-                        if (cuetaImpl.getCuenta(enteredIdCuenta())){
+                        Cuenta cuentaUsandose = cuetaImpl.getCuenta(Integer.parseInt(enteredIdCuenta), UserActual.getClienteActual().getId());
+                        if (cuentaUsandose==null){
                             emitirChequesMenu = false;
                             System.out.println("Id Cuenta Invalida");
                             break;
@@ -64,15 +71,27 @@ public class Main {
                         String enteredBeneficiario = scanner.nextLine();
                         System.out.println("monto");
                         String enteredmonto = scanner.nextLine();
-                        System.out.println("monto_letras");
-                        String enteredmonto_letras = scanner.nextLine();
+                        System.out.println(cuentaUsandose.getTipo());
+                        if (cuentaUsandose.getTipo() == TipoDeCuentaEnum.Personal && Integer.parseInt(enteredmonto) >= 10000000){
+                            emitirChequesMenu = false;
+                            System.out.println("Monto Invalido");
+                            break;
+                        }
+                        String enteredmonto_letras = enteredmonto;
                         System.out.println("prioridad");
                         String enteredprioridad = scanner.nextLine();
+                        try {
+                            ChequesPrioridadEnum.valueOf(enteredprioridad);
+                        } catch (Exception e){
+                            emitirChequesMenu = false;
+                            System.out.println("Prioridad Invalida");
+                            break;
+                        }
                         System.out.println("firma_digital");
                         String enteredfirma_digital = scanner.nextLine();
-                        System.out.println("fecha_emision");
-                        String enteredChequeNumber = scanner.nextLine();
-                    }
+                        Date fechadeemision = Date.valueOf(Timestamp.from(Instant.now()).toString());
+                        chequeImpl.addCheque(new Cheque(Integer.parseInt(enteredIdCuenta), enteredBeneficiario, Double.parseDouble(enteredmonto), enteredmonto_letras, ChequesPrioridadEnum.valueOf(enteredprioridad), enteredfirma_digital, ChequesEstadoEnum.Pendiente, null, fechadeemision));
+                        }
                     break;
                 case "5":
                     boolean repoteChequesMenu = true;

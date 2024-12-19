@@ -37,7 +37,7 @@ public class CuentaImpl implements CuentaDao {
     @Override
     //  ! El Usuario Solo debe Ingresa La Id_cuenta, el id cliente lo sabe el software
     public Cuenta getCuenta(int id_cuenta, int id_cliente) {
-        String sql = "SELECT * FROM cuentas WHERE id_cuenta=? AND id_cliente=?";
+        String sql = "SELECT * FROM cuentas WHERE id=? AND id_cliente=?";
         try (Connection connection = DatabaseConnectionLogic.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setInt(1, id_cuenta);
@@ -49,7 +49,7 @@ public class CuentaImpl implements CuentaDao {
                         rs.getInt("id_cliente"),
                         TipoDeCuentaEnum.valueOf(rs.getString("tipo")),
                         rs.getDouble("saldo"),
-                        rs.getDouble("limiteSaldo"),
+                        rs.getDouble("limite_saldo"),
                         rs.getTimestamp("fecha_apertura"),
                         CuentaEstadoEnum.valueOf(rs.getString("estado"))
                 ));
