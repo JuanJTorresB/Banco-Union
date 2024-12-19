@@ -1,0 +1,5 @@
+--------------------------------------------------BANCO UNIÓN S.A
+Cheque No:CH0001001Fecha:2023-12-01
+PAGUESE A:Luis FernandezLA SUMA DE:Ciento cincuenta mil pesos
+Valor:150000.0
+FIRMA DIGITAL:FIRMA101--------------------------------------------------
