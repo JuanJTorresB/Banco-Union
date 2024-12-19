@@ -74,7 +74,7 @@ public class CuentaImpl implements CuentaDao {
                         rs.getInt("id_cliente"),
                         TipoDeCuentaEnum.valueOf(rs.getString("tipo")),
                         rs.getDouble("saldo"),
-                        rs.getDouble("limiteSaldo"),
+                        rs.getDouble("limite_saldo"),
                         rs.getTimestamp("fecha_apertura"),
                         CuentaEstadoEnum.valueOf(rs.getString("estado"))
                 ));
