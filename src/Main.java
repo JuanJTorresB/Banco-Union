@@ -2,7 +2,7 @@ import Repository.Implementations.ChequesImpl;
 import Repository.Implementations.ClienteImpl;
 import Repository.Implementations.CuentaImpl;
 import model.Cheque;
-import model.Cliente;
+
 import model.Cuenta;
 import util.Enums.ChequesEstadoEnum;
 import util.Enums.ChequesPrioridadEnum;
@@ -10,10 +10,8 @@ import util.Enums.TipoDeCuentaEnum;
 import util.FileManagment;
 import util.IdentificationValidator;
 
-import javax.swing.*;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -40,22 +38,13 @@ public class Main {
         while (flagMainMenu){
             System.out.println("Que Desea Hacer");
             System.out.printf("""
-                    1. Depositos
-                    2. Retiros
                     3. Emitir Cheque
-                    4. Cobrar Cheque
                     5. Reporte Cheques
                     * Salir
                     """);
             Scanner scanner = new Scanner(System.in);
             String enteredOptionMainMenu = scanner.nextLine();
             switch (enteredOptionMainMenu.trim()){
-                case "1":
-                    System.out.println("a");
-                    break;
-                case "2":
-                    System.out.println("b");
-                    break;
                 case "3":
                     boolean emitirChequesMenu = true;
                     while (emitirChequesMenu){
@@ -89,8 +78,9 @@ public class Main {
                         }
                         System.out.println("firma_digital");
                         String enteredfirma_digital = scanner.nextLine();
-                        Date fechadeemision = Date.valueOf(Timestamp.from(Instant.now()).toString());
+                        Date fechadeemision = Date.valueOf(LocalDate.now());
                         chequeImpl.addCheque(new Cheque(Integer.parseInt(enteredIdCuenta), enteredBeneficiario, Double.parseDouble(enteredmonto), enteredmonto_letras, ChequesPrioridadEnum.valueOf(enteredprioridad), enteredfirma_digital, ChequesEstadoEnum.Pendiente, null, fechadeemision));
+                        break;
                         }
                     break;
                 case "5":
